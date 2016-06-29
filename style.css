@@ -1,0 +1,162 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #111;
+  color: #fff;
+  font-family: "Roboto"; }
+
+.main-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .main-container .main {
+    width: 80vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+    .main-container .main .introduction-container {
+      margin-bottom: 1em; }
+      .main-container .main .introduction-container .introduction {
+        display: flex;
+        flex-direction: column;
+        align-items: center; }
+        .main-container .main .introduction-container .introduction .introduction-title {
+          font-size: 2em; }
+          @media (min-width: 1000px) {
+            .main-container .main .introduction-container .introduction .introduction-title {
+              font-size: 4em; } }
+        .main-container .main .introduction-container .introduction .introduction-description {
+          margin-top: 0.2em;
+          margin-bottom: 1em;
+          text-align: center; }
+        .main-container .main .introduction-container .introduction .address-input {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 0.5em; }
+          .main-container .main .introduction-container .introduction .address-input .town-input {
+            padding-left: 0.2em;
+            margin-bottom: 0.25em; }
+        .main-container .main .introduction-container .introduction .buttons {
+          display: flex;
+          justify-content: center; }
+          .main-container .main .introduction-container .introduction .buttons .submit-button, .main-container .main .introduction-container .introduction .buttons .alt-units {
+            background-color: brown;
+            font-size: 0.8em;
+            padding: 0.4em;
+            cursor: pointer; }
+          .main-container .main .introduction-container .introduction .buttons .submit-button {
+            margin-right: 0.75em; }
+    .main-container .main .current-container {
+      margin-bottom: 1em; }
+      .main-container .main .current-container .current {
+        display: flex;
+        flex-direction: column;
+        align-items: center; }
+        .main-container .main .current-container .current .current-weather-info .current-weather-details {
+          display: flex;
+          justify-content: center; }
+          .main-container .main .current-container .current .current-weather-info .current-weather-details .current-icon {
+            width: 15vw;
+            height: 15vw;
+            max-height: 5em;
+            max-width: 5em;
+            margin-right: 1em; }
+          @media (min-width: 1000px) {
+            .main-container .main .current-container .current .current-weather-info .current-weather-details .temp-display .current-text {
+              font-size: 1.3em;
+              text-align: center; } }
+          .main-container .main .current-container .current .current-weather-info .current-weather-details .temp-display .current-temp {
+            display: flex; }
+            .main-container .main .current-container .current .current-weather-info .current-weather-details .temp-display .current-temp .current-temp-value {
+              font-size: 1.5em; }
+              @media (min-width: 1000px) {
+                .main-container .main .current-container .current .current-weather-info .current-weather-details .temp-display .current-temp .current-temp-value {
+                  font-size: 2.5em; } }
+            .main-container .main .current-container .current .current-weather-info .current-weather-details .temp-display .current-temp .inactive-unit {
+              cursor: pointer;
+              color: #ccc; }
+    .main-container .main .forecast-container {
+      width: 80vw;
+      display: flex;
+      justify-content: center; }
+      .main-container .main .forecast-container .forecast {
+        display: flex;
+        font-size: 0.7em;
+        justify-content: space-between; }
+        .main-container .main .forecast-container .forecast .forecast-day {
+          display: flex;
+          flex-direction: column;
+          text-align: center; }
+          .main-container .main .forecast-container .forecast .forecast-day .day-name {
+            font-size: 1.2em; }
+            @media (min-width: 1000px) {
+              .main-container .main .forecast-container .forecast .forecast-day .day-name {
+                font-size: 1.8em; } }
+          .main-container .main .forecast-container .forecast .forecast-day .temperatures {
+            font-size: 1.1em; }
+            @media (min-width: 1000px) {
+              .main-container .main .forecast-container .forecast .forecast-day .temperatures {
+                font-size: 1.5em; } }
+          .main-container .main .forecast-container .forecast .forecast-day .icon {
+            margin-top: 0.25em;
+            margin-bottom: 0.25em;
+            width: 11vw;
+            height: 11vw;
+            max-height: 7em;
+            max-width: 7em; }
+    .main-container .main .hourly-container {
+      width: 80vw;
+      display: flex;
+      justify-content: center; }
+      .main-container .main .hourly-container .hourly {
+        display: flex;
+        font-size: 0.7em;
+        justify-content: space-between; }
+        .main-container .main .hourly-container .hourly .hourly-hour {
+          display: flex;
+          flex-direction: column;
+          text-align: center; }
+          .main-container .main .hourly-container .hourly .hourly-hour .hour-name {
+            font-size: 1.2em; }
+            @media (min-width: 1000px) {
+              .main-container .main .hourly-container .hourly .hourly-hour .hour-name {
+                font-size: 1.8em; } }
+          .main-container .main .hourly-container .hourly .hourly-hour .temperatures {
+            margin-top: 0.5em;
+            font-size: 1.1em; }
+            @media (min-width: 1000px) {
+              .main-container .main .hourly-container .hourly .hourly-hour .temperatures {
+                font-size: 1.5em;
+                margin-top: 0.75em; } }
+          .main-container .main .hourly-container .hourly .hourly-hour .icon {
+            width: 11vw;
+            height: 11vw;
+            max-height: 6em;
+            max-width: 6em; }
+    .main-container .main .toggle-container {
+      display: flex;
+      justify-content: flex-end;
+      width: 77vw;
+      max-width: 34em; }
+      .main-container .main .toggle-container .toggle-forecast-type {
+        display: flex;
+        align-self: flex-end;
+        border-radius: 1px;
+        margin-top: 1em; }
+        .main-container .main .toggle-container .toggle-forecast-type .select-hourly, .main-container .main .toggle-container .toggle-forecast-type .select-seven-day {
+          font-size: 0.6em;
+          padding: 0.6em;
+          border: 1px rgba(200, 200, 200, 0.8) solid;
+          background-color: rgba(150, 150, 150, 0.7);
+          cursor: pointer; }
+          @media (min-width: 1000px) {
+            .main-container .main .toggle-container .toggle-forecast-type .select-hourly, .main-container .main .toggle-container .toggle-forecast-type .select-seven-day {
+              font-size: 0.7em; } }
+        .main-container .main .toggle-container .toggle-forecast-type .active {
+          background-color: rgba(144, 36, 36, 0.7); }
+
+/*# sourceMappingURL=weather.css.map */

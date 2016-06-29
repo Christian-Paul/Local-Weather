@@ -1,0 +1,201 @@
+html, body
+  margin: 0
+  padding: 0
+  background-color: #111
+  color: #fff
+  font-family: "Roboto"
+
+// garbage below this line
+
+.main-container
+  height: 100vh
+  width: 100vw
+  display: flex
+  justify-content: center
+  align-items: center
+
+  .main
+    width: 80vw
+    height: 100vh
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+    .introduction-container
+      margin-bottom: 1em
+
+      .introduction
+        display: flex
+        flex-direction: column
+        align-items: center
+
+        .introduction-title
+          font-size: 2em
+
+          @media (min-width: 1000px)
+            font-size: 4em
+
+        .introduction-description
+          margin-top: 0.2em
+          margin-bottom: 1em
+          text-align: center
+
+        .address-input
+          display: flex
+          flex-direction: column
+          margin-bottom: 0.5em
+
+          .town-input
+            padding-left: 0.2em
+            margin-bottom: 0.25em
+
+        .buttons
+          display: flex
+          justify-content: center
+
+          .submit-button, .alt-units
+            background-color: brown
+            font-size: 0.8em
+            padding: 0.4em
+            cursor: pointer
+
+          .submit-button
+            margin-right: 0.75em
+
+    .current-container
+      margin-bottom: 1em
+
+      .current
+        display: flex
+        flex-direction: column
+        align-items: center
+
+        .current-weather-info
+          .current-weather-details
+            display: flex
+            justify-content: center
+
+            .current-icon
+              width: 15vw
+              height: 15vw
+              max-height: 5em
+              max-width: 5em
+              margin-right: 1em
+
+            .temp-display
+              .current-text
+                @media (min-width: 1000px)
+                  font-size: 1.3em
+                  text-align: center
+
+              .current-temp
+                display: flex
+
+                .current-temp-value
+                  font-size: 1.5em
+
+                  @media (min-width: 1000px)
+                    font-size: 2.5em
+
+                .active-unit
+
+                .inactive-unit
+                  cursor: pointer
+                  color: #ccc
+
+    .forecast-container
+      width: 80vw
+      display: flex
+      justify-content: center
+
+      .forecast
+        display: flex
+        font-size: 0.7em
+        justify-content: space-between
+
+        .forecast-day
+          display: flex
+          flex-direction: column
+          text-align: center
+
+          .day-name
+            font-size: 1.2em
+
+            @media (min-width: 1000px)
+              font-size: 1.8em
+
+          .temperatures
+            font-size: 1.1em
+
+            @media (min-width: 1000px)
+              font-size: 1.5em
+
+          .icon
+            margin-top: 0.25em
+            margin-bottom: 0.25em
+            width: 11vw
+            height: 11vw
+            max-height: 7em
+            max-width: 7em
+
+
+    .hourly-container
+      width: 80vw
+      display: flex
+      justify-content: center
+
+      .hourly
+        display: flex
+        font-size: 0.7em
+        justify-content: space-between
+
+        .hourly-hour
+          display: flex
+          flex-direction: column
+          text-align: center
+
+          .hour-name
+            font-size: 1.2em
+
+            @media (min-width: 1000px)
+              font-size: 1.8em
+
+          .temperatures
+            margin-top: 0.5em
+            font-size: 1.1em
+
+            @media (min-width: 1000px)
+              font-size: 1.5em
+              margin-top: 0.75em
+
+          .icon
+            width: 11vw
+            height: 11vw
+            max-height: 6em
+            max-width: 6em
+
+    .toggle-container
+      display: flex
+      justify-content: flex-end
+      width: 77vw
+      max-width: 34em
+
+      .toggle-forecast-type
+        display: flex
+        align-self: flex-end
+        border-radius: 1px
+        margin-top: 1em
+
+        .select-hourly, .select-seven-day
+          font-size: 0.6em
+          padding: 0.6em
+          border: 1px rgba(200, 200, 200, 0.8) solid
+          background-color: rgba(150, 150, 150, 0.7)
+          cursor: pointer
+
+          @media (min-width: 1000px)
+            font-size: 0.7em
+
+        .active
+          background-color: rgba(144, 36, 36, 0.7)
