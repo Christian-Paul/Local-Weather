@@ -9,123 +9,154 @@ var currentCondition;
 var forecastCondition;
 var hourlyCondition;
 var isActive = '7day';
+var currentData, hourlyData, forecastData;
+
+function displayCurrentWeather(units, data) {
+	// display icon
+	// takes the condition name from the api icon
+	currentCondition = data.current_observation.icon_url.split('/')[6].split('.')[0];
+
+	// splices condition name into wunderground's better icon url format
+	$('.current-icon').attr('src', 'https://icons.wxug.com/i/c/v4/' + currentCondition + '.svg');
+
+		// display town name
+		$('.location-name').text(data.current_observation.display_location.full);
+
+	// displays the temperature in relevant units
+	if(units === 'fahrenheit') {
+		$('.current-temp-value').html(Math.round(data.current_observation.temp_f) + '&deg&nbsp;');
+		$('.active-unit').text('F');
+		$('.inactive-unit').text('C')
+	} else {
+		$('.current-temp-value').html(Math.round(data.current_observation.temp_c) + '&deg&nbsp;');
+		$('.active-unit').text('C');
+		$('.inactive-unit').text('F');
+	}
+
+	// hide backup input
+	$('.backup').hide(500);
+
+	// show current weather after data is obtained
+	$('.current-container').show(500);
+}
 
 // queries wunderground api for current weather conditions
 // called after location is obtained and when units are switched
 function getCurrentWeather(state, town, units) {
-	$.getJSON('https://api.wunderground.com/api/' + wundergroundKey + '/geolookup/conditions/q/' + state + '/' + town + '.json', function(data) {
-		
-		// display icon
-		// takes the condition name from the api icon
-		currentCondition = data.current_observation.icon_url.split('/')[6].split('.')[0];
+	// only sends API request if we don't already have the data
+	if(!currentData) {
+		$.getJSON('https://api.wunderground.com/api/' + wundergroundKey + '/geolookup/conditions/q/' + state + '/' + town + '.json', function(data) {
 
-		// splices condition name into wunderground's better icon url format
-		$('.current-icon').attr('src', 'https://icons.wxug.com/i/c/v4/' + currentCondition + '.svg');
+			currentData = data;
 
-  		// display town name
-  		$('.location-name').text(data.current_observation.display_location.full);
-
-		// displays the temperature in relevant units
-		if(units === 'fahrenheit') {
-			$('.current-temp-value').html(Math.round(data.current_observation.temp_f) + '&deg&nbsp;');
-			$('.active-unit').text('F');
-			$('.inactive-unit').text('C')
-		} else {
-			$('.current-temp-value').html(Math.round(data.current_observation.temp_c) + '&deg&nbsp;');
-			$('.active-unit').text('C');
-			$('.inactive-unit').text('F');
-		}
-
-		// hide backup input
-		$('.backup').hide(500);
-
-		// show current weather after data is obtained
-		$('.current-container').show(500);
-	});
+			displayCurrentWeather(units, currentData);
+		});
+	} else {
+		displayCurrentWeather(units, currentData);
+	}
 }
 
-// queries wunderground api for 10 day forecase
-// called after location is obtained and when units are switched
-function getForecast(state, town, units, isActive) {
-	$.getJSON('https://api.wunderground.com/api/' + wundergroundKey + '/geolookup/forecast10day/q/' + state + '/' + town + '.json', function(data) {
-		for(var i = 0; i < 7; i++) {
-			// displays days
-			$('.forecast-day-' + i + '> .day-name').html(data.forecast.simpleforecast.forecastday[i].date.weekday.substring(0, 3))
+function displayForecast(units, data) {
+	for(var i = 0; i < 7; i++) {
+		// displays days
+		$('.forecast-day-' + i + '> .day-name').html(data.forecast.simpleforecast.forecastday[i].date.weekday.substring(0, 3))
 
-			// displays forecast icons
-			// takes the condition name from the api icon
-			forecastCondition = data.forecast.simpleforecast.forecastday[i].icon_url.split('/')[6].split('.')[0];
+		// displays forecast icons
+		// takes the condition name from the api icon
+		forecastCondition = data.forecast.simpleforecast.forecastday[i].icon_url.split('/')[6].split('.')[0];
 
-			// splices condition name into wunderground's better icon url format
-			$('.forecast-day-' + i + '> .icon').attr('src', 'https://icons.wxug.com/i/c/v4/' + forecastCondition + '.svg');
+		// splices condition name into wunderground's better icon url format
+		$('.forecast-day-' + i + '> .icon').attr('src', 'https://icons.wxug.com/i/c/v4/' + forecastCondition + '.svg');
 
-			// displays forecast's daily highs
-			if(units === 'fahrenheit') {
-				$('.forecast-day-' + i + '> .temperatures > .high-temp').html(data.forecast.simpleforecast.forecastday[i].high.fahrenheit + '&deg');
-			} else {
-				$('.forecast-day-' + i + '> .temperatures > .high-temp').html(data.forecast.simpleforecast.forecastday[i].high.celsius + '&deg');
-			}
-
-			// displays forecast's daily lows
-			if(units === 'fahrenheit') {
-				$('.forecast-day-' + i + '> .temperatures > .low-temp').html(data.forecast.simpleforecast.forecastday[i].low.fahrenheit + '&deg');
-			} else {
-				$('.forecast-day-' + i + '> .temperatures > .low-temp').html(data.forecast.simpleforecast.forecastday[i].low.celsius + '&deg');
-			}
-
-			// show forecast after data is obtained
-			if(isActive === '7day') {
-				$('.forecast-container').show(500);
-			} else {
-				$('.forecast-container').hide(500);
-			}
-
-			$('.toggle-forecast-type').show();
+		// displays forecast's daily highs
+		if(units === 'fahrenheit') {
+			$('.forecast-day-' + i + '> .temperatures > .high-temp').html(data.forecast.simpleforecast.forecastday[i].high.fahrenheit + '&deg');
+		} else {
+			$('.forecast-day-' + i + '> .temperatures > .high-temp').html(data.forecast.simpleforecast.forecastday[i].high.celsius + '&deg');
 		}
-	});
+
+		// displays forecast's daily lows
+		if(units === 'fahrenheit') {
+			$('.forecast-day-' + i + '> .temperatures > .low-temp').html(data.forecast.simpleforecast.forecastday[i].low.fahrenheit + '&deg');
+		} else {
+			$('.forecast-day-' + i + '> .temperatures > .low-temp').html(data.forecast.simpleforecast.forecastday[i].low.celsius + '&deg');
+		}
+
+		// show forecast after data is obtained
+		if(isActive === '7day') {
+			$('.forecast-container').show(500);
+		} else {
+			$('.forecast-container').hide(500);
+		}
+
+		$('.toggle-forecast-type').show();
+	}
+}
+
+// queries wunderground api for 10 day forecast
+// called after location is obtained, when units are switched, and when 7-day/hourly is toggled
+function getForecast(state, town, units, isActive) {
+	if (!forecastData) {
+		$.getJSON('https://api.wunderground.com/api/' + wundergroundKey + '/geolookup/forecast10day/q/' + state + '/' + town + '.json', function(data) {
+			forecastData = data;
+			displayForecast(units, forecastData);
+		});
+	} else {
+		displayForecast(units, forecastData);
+	}
+}
+
+function displayHourly(units, data) {
+	for(var i = 0; i < 7; i++) {
+		var displayHour;
+		if(i === 0) {
+			displayHour = 0;
+		} else {
+			displayHour = i*2;
+		}
+
+		// displays hours
+		var prettyHour = data.hourly_forecast[displayHour].FCTTIME.hour;
+		prettyHour = prettyHour > 12 ? prettyHour - 12 : prettyHour;
+		prettyHour = prettyHour === "0" ? 12 : prettyHour;
+		$('.hourly-hour-' + i + '> .hour-name').html(prettyHour + ' ' + data.hourly_forecast[displayHour].FCTTIME.ampm)
+
+		
+		// displays hourly icons
+		// takes the condition name from the api icon
+		hourlyCondition = data.hourly_forecast[displayHour].icon_url.split('/')[6].split('.')[0];
+
+		// splices condition name into wunderground's better icon url format
+		$('.hourly-hour-' + i + '> .icon').attr('src', 'https://icons.wxug.com/i/c/v4/' + hourlyCondition + '.svg');
+
+		
+		// displays hourly temperature
+		if(units === 'fahrenheit') {
+			$('.hourly-hour-' + i + '> .temperatures > .temp').html(data.hourly_forecast[displayHour].temp.english + '&deg');
+		} else {
+			$('.hourly-hour-' + i + '> .temperatures > .temp').html(data.hourly_forecast[displayHour].temp.metric + '&deg');
+		}
+
+		// show hourly after data is obtained
+		if(isActive === 'hourly') {
+			$('.hourly-container').show(500);
+		} else {
+			$('.hourly-container').hide(500);
+		}
+	}
 }
 
 function getHourly(state, town, units, isActive) {
-	$.getJSON('https://api.wunderground.com/api/' + wundergroundKey + '/hourly/q/' + state + '/' + town + '.json', function(data) {
-		console.log(data.hourly_forecast);
-		for(var i = 0; i < 7; i++) {
-			var displayHour;
-			if(i === 0) {
-				displayHour = 0;
-			} else {
-				displayHour = i*2;
-			}
+	if(!hourlyData) {
+		$.getJSON('https://api.wunderground.com/api/' + wundergroundKey + '/hourly/q/' + state + '/' + town + '.json', function(data) {
 
-			// displays hours
-			var prettyHour = data.hourly_forecast[displayHour].FCTTIME.hour;
-			prettyHour = prettyHour > 12 ? prettyHour - 12 : prettyHour;
-			prettyHour = prettyHour === "0" ? 12 : prettyHour;
-			$('.hourly-hour-' + i + '> .hour-name').html(prettyHour + ' ' + data.hourly_forecast[displayHour].FCTTIME.ampm)
+			hourlyData = data;
+			displayHourly(units, hourlyData);
 
-			
-			// displays hourly icons
-			// takes the condition name from the api icon
-			hourlyCondition = data.hourly_forecast[displayHour].icon_url.split('/')[6].split('.')[0];
-
-			// splices condition name into wunderground's better icon url format
-			$('.hourly-hour-' + i + '> .icon').attr('src', 'https://icons.wxug.com/i/c/v4/' + hourlyCondition + '.svg');
-
-			
-			// displays hourly temperature
-			if(units === 'fahrenheit') {
-				$('.hourly-hour-' + i + '> .temperatures > .temp').html(data.hourly_forecast[displayHour].temp.english + '&deg');
-			} else {
-				$('.hourly-hour-' + i + '> .temperatures > .temp').html(data.hourly_forecast[displayHour].temp.metric + '&deg');
-			}
-
-			// show hourly after data is obtained
-			if(isActive === 'hourly') {
-				$('.hourly-container').show(500);
-			} else {
-				$('.hourly-container').hide(500);
-			}
-		}
-	});
+		});
+	} else {
+		displayHourly(units, hourlyData);
+	}
 }
 
 $(document).ready(function() {
